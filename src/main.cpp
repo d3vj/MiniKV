@@ -40,17 +40,12 @@ bool KeyValueStore::remove(string key) {
 }
 
 int main() {
-    KeyValueStore store;
+    string command;
 
-    store.set("name", "Joan");
+    cout << "MiniKV > ";
+    cin >> command;
 
-    cout << "Before delete: [" << store.get("name") << "]" << endl;
-
-    cout << "Deleted: " << store.remove("name") << endl;
-
-    cout << "After delete: [" << store.get("name") << "]" << endl;
-
-    cout << "Delete again: " << store.remove("name") << endl;
+    cout << "You entered: " << command << endl;
 
     return 0;
 }
