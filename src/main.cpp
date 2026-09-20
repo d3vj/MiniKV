@@ -32,21 +32,58 @@ string KeyValueStore::get(string key) {
 }
 
 bool KeyValueStore::remove(string key) {
-    if (data.find(key) != data.end()) {
-        data.erase(key);
+    auto it = data.find(key);
+
+    if(it != data.end()){
+        data.erase(it);
         return true;
-    } else {
+
+    }
+    else {
         return false;
     }
+
 }
 
 int main() {
+    KeyValueStore store;
+
     string command;
 
-    cout << "MiniKV > ";
-    cin >> command;
+    while(true){
+        cout << "MiniKV > ";
+        cin >> command;
 
-    cout << "You entered: " << command << endl;
+        if (command == "EXIT") {
+            break;
+        }
+
+if (command == "SET") {
+    string key;
+    string value;
+
+    cin >> key >> value;
+
+    store.set(key, value);
+}
+else if (command == "GET") {
+    string key;
+
+    cin >> key;
+
+    cout << store.get(key) << endl;
+}
+else if (command == "REMOVE") {
+    string key;
+
+    cin >> key;
+
+    cout << store.remove(key) << endl;
+}
+
+    }
+
+
 
     return 0;
 }
