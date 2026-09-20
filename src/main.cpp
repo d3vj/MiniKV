@@ -21,13 +21,14 @@ void KeyValueStore::set(string key, string value) {
     data[key] = value;
 }
 
-
+//auto automatically detects data tyoe and allows -> first oior key ->second for value 
 string KeyValueStore::get(string key) {
-    if (data.find(key) != data.end()) {
-        return data[key];
-    } else {
-        return "";
+    auto it = data.find(key);
+
+    if(it != data.end()){
+        return it->second;
     }
+    return "";
 }
 
 bool KeyValueStore::remove(string key) {
