@@ -1,13 +1,14 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <utility>
 
 using namespace std;
 
 class KeyValueStore {
 public:
     void set(string key, string value);
-    string get(string key);
+    pair<string, bool> get(string key);
     bool remove(string key);
 
 private:
@@ -22,13 +23,14 @@ void KeyValueStore::set(string key, string value) {
 }
 
 //auto automatically detects data tyoe and allows -> first oior key ->second for value 
-string KeyValueStore::get(string key) {
+pair<string, bool> KeyValueStore::get(string key) {
     auto it = data.find(key);
 
-    if(it != data.end()){
-        return it->second;
+    if (it != data.end()) {
+        return {it->second, true};
     }
-    return "";
+
+    return {"", false};
 }
 
 bool KeyValueStore::remove(string key) {
@@ -68,11 +70,18 @@ if (command == "SET") {
 }
 else if (command == "GET") {
     string key;
-
     cin >> key;
 
-    cout << store.get(key) << endl;
+    auto result = store.get(key);
+
+    if (result.second) {
+        cout << result.first << endl;
+    }
+    else {
+        cout << "Key Does Not Exist, Try Again: " << endl;
+    }
 }
+
 else if (command == "REMOVE") {
     string key;
 
@@ -80,6 +89,7 @@ else if (command == "REMOVE") {
 
     cout << store.remove(key) << endl;
 }
+//should we handle upper case different from random entry , also get not found and Set not done righ and remove not done rifhr each done sepaprately exit succesful as
 
     }
 
