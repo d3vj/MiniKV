@@ -8,6 +8,8 @@ using namespace std;
 
 int main() {
     KeyValueStore store;
+    
+    store.load("minikv.db");
 
     string command;
         cout << "MiniKV v1.0" << endl;
@@ -33,9 +35,13 @@ for (char &c : command) {
 }
 
         if (command == "EXIT") {
-            cout << "Goodbye." << endl;
-            break;
-        }
+    if (!store.save("minikv.db")) {
+        cout << "Error: failed to save data" << endl;
+    }
+
+    cout << "Goodbye." << endl;
+    break;
+}
 
 if (command == "SET") {
 string key;

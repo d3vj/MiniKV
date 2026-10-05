@@ -13,6 +13,9 @@ public:
     pair<string, bool> get(string key);
     bool remove(string key);
 
+    bool save(const string& filename);
+    bool load(const string& filename);
+    
 private:
     unordered_map<string, string> data;
 };
