@@ -1,53 +1,10 @@
 #include <iostream>
-#include <unordered_map>
 #include <string>
-#include <utility>
-#include <cctype>
 #include <sstream>
+#include <cctype>
+#include "KeyValueStore.h"
 
 using namespace std;
-
-class KeyValueStore {
-public:
-    void set(string key, string value);
-    pair<string, bool> get(string key);
-    bool remove(string key);
-
-private:
-unordered_map<string , string> data ;
-    
-
-
-};
-
-void KeyValueStore::set(string key, string value) {
-    data[key] = value;
-}
-
-//auto automatically detects data tyoe and allows -> first oior key ->second for value 
-pair<string, bool> KeyValueStore::get(string key) {
-    auto it = data.find(key);
-
-    if (it != data.end()) {
-        return {it->second, true};
-    }
-
-    return {"", false};
-}
-
-bool KeyValueStore::remove(string key) {
-    auto it = data.find(key);
-
-    if(it != data.end()){
-        data.erase(it);
-        return true;
-
-    }
-    else {
-        return false;
-    }
-
-}
 
 int main() {
     KeyValueStore store;
