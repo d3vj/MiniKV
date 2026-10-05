@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <string>
 #include <utility>
+#include <cctype>
+#include <sstream>
 
 using namespace std;
 
@@ -51,26 +53,51 @@ int main() {
     KeyValueStore store;
 
     string command;
+        cout << "MiniKV v1.0" << endl;
+        cout << "Persistent key-value storage" << endl;
+        cout << "Type HELP for available commands." << endl;
+        cout << endl;
 
     while(true){
-        cout << "MiniKV > ";
-        cin >> command;
+cout << "MiniKV > ";
+
+string line;
+getline(cin, line);
+
+if (line.empty()) {
+    continue;
+}
+
+stringstream ss(line);
+ss >> command;
+
+for (char &c : command) {
+    c = toupper(c);
+}
 
         if (command == "EXIT") {
+            cout << "Goodbye." << endl;
             break;
         }
 
 if (command == "SET") {
-    string key;
-    string value;
+string key;
+string value;
 
-    cin >> key >> value;
+ss >> key;
+getline(ss >> ws, value);
 
+if (key.empty() || value.empty()) {
+    cout << "Error: usage SET <key> <value>" << endl;
+}
+else {
     store.set(key, value);
+    cout << "OK" << endl;
+}
 }
 else if (command == "GET") {
     string key;
-    cin >> key;
+    ss >> key;
 
     auto result = store.get(key);
 
@@ -78,26 +105,34 @@ else if (command == "GET") {
         cout << result.first << endl;
     }
     else {
-        cout << "Key Does Not Exist, Try Again: " << endl;
+        cout << "Error: key \"" << key << "\" not found" << endl;
     }
 }
 
 else if (command == "REMOVE") {
     string key;
-    cin >> key;
+    ss >> key;
 
     bool removed = store.remove(key);
 
     if (removed) {
-        cout << "Key removed" << endl;
+        cout << "Deleted \"" << key << "\"" << endl;
     }
     else {
-        cout << "Key does not exist" << endl;
+        cout << "Error: key \"" << key << "\" not found" << endl;
     }
 }
 
+else if (command == "HELP") {
+    cout << "Commands:" << endl;
+    cout << "  SET <key> <value>   Store or update a value" << endl;
+    cout << "  GET <key>           Retrieve a value" << endl;
+    cout << "  REMOVE <key>        Delete a key" << endl;
+    cout << "  HELP                Show available commands" << endl;
+    cout << "  EXIT                Exit MiniKV" << endl;
+}
 else {
-    cout << "Unknown command" << endl;
+    cout << "Error: unknown command \"" << command << "\"" << endl;
 }
 //should we handle upper case different from random entry , also get not found and Set not done righ and remove not done rifhr each done sepaprately exit succesful as
 
