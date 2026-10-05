@@ -84,10 +84,20 @@ else if (command == "GET") {
 
 else if (command == "REMOVE") {
     string key;
-
     cin >> key;
 
-    cout << store.remove(key) << endl;
+    bool removed = store.remove(key);
+
+    if (removed) {
+        cout << "Key removed" << endl;
+    }
+    else {
+        cout << "Key does not exist" << endl;
+    }
+}
+
+else {
+    cout << "Unknown command" << endl;
 }
 //should we handle upper case different from random entry , also get not found and Set not done righ and remove not done rifhr each done sepaprately exit succesful as
 
